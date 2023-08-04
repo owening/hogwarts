@@ -7,7 +7,6 @@
 @Author ：Owen
 @Date ：2023/8/3 19:29 
 '''
-import time
 
 import pytest
 from selenium import webdriver
@@ -41,6 +40,7 @@ class TestCeShiRen:
         self.driver.find_element(By.CSS_SELECTOR,"[placeholder='搜索']").send_keys(keyword)
         self.driver.find_element(By.CSS_SELECTOR,".search-cta").click()
         res_element = self.driver.find_element(By.CSS_SELECTOR,".topic-title")
+        print(f"搜索结果第一个标题为：{res_element.text}")
         assert keyword in res_element.text.lower()
 
 
