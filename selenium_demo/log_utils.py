@@ -19,8 +19,16 @@ ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
 # 日志打印格式
 formatter = logging.Formatter\
-('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+('%(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)')
 # 添加格式配置
 ch.setFormatter(formatter)
+
 # 添加日志配置
 logger.addHandler(ch)
+
+
+# logging.basicConfig(
+#     filename='myapp.log',
+#     level=logging.INFO,
+#     format='%(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)',
+#     datefmt='%m/%d/%Y %I:%M:%S %p')
