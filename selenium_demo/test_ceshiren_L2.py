@@ -28,8 +28,7 @@ class TestCeShiRen:
     def teardown(self):
         self.driver.quit()
 
-    # @pytest.mark.parametrize("keyword",["selenium","appium","面试"])
-    @pytest.mark.parametrize("keyword", ["selenium"])
+    @pytest.mark.parametrize("keyword",["selenium","appium","面试"])
     def test_search(self, keyword):
         self.driver.get("https://ceshiren.com/")
         logger.info("访问测试人社区首页")
