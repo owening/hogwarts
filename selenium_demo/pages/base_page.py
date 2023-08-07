@@ -4,6 +4,8 @@
 # @Author  : Owen
 # @File    : base_page.py
 # @Software: PyCharm
+import time
+
 from selenium import webdriver
 
 
@@ -18,19 +20,64 @@ class BasePage:
             self.driver.maximize_window()
             self.driver.implicitly_wait(5)
 
-    def do_find(self,by):
+    def do_find(self, by):
+        """
+         查找获取单个元素
+        :param by:
+        :return: 单个元素对象
+        """
         return self.driver.find_element(*by)
 
-    def do_click(self,by):
+    def do_finds(self, by):
+        """
+        查找获取多个元素
+        :param by:
+        :return: 多个元素对象列表
+        """
+        return self.driver.find_elements(*by)
+
+    def do_by_keyword_find(self, by, keywords):
+        """
+        通过关键字定位信息定位元素
+        示例： '//*[text() =\'{}\']/../../td/input'.format(keywords)
+        :param by:
+        :param keywords:
+        :return:
+        """
+        return self.driver.find_element(by[0], by[1].format(keywords))
+
+    def do_click(self, by):
+        """
+        点击
+        :param by:
+        :return:
+        """
         self.do_find(by).click()
 
-    def do_sendkeys(self,by,value):
-         el =self.do_find(by)
-         el.clear()
-         el.send_keys(value)
+    def do_sendkeys(self, by, value):
+        """
+        输入数据
+        :param by:
+        :param value:
+        :return:
+        """
+        el = self.do_find(by)
+        el.clear()
+        el.send_keys(value)
 
     def do_quit(self):
         self.driver.quit()
 
-    def do_screenshot(self,filename):
+    def do_screenshot(self, filename):
+        """
+        截图
+        :param filename:
+        :return:
+        """
         self.driver.save_screenshot(filename)
+
+    def do_sleep(self,seconds=1):
+        time.sleep(seconds)
+
+
+

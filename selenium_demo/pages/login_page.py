@@ -16,7 +16,7 @@ class LoginPage(BasePage):
 
     def login(self):
         self.driver.get("https://work.weixin.qq.com/wework_admin/frame#index")
-        time.sleep(20)
+        time.sleep(10)
         cookies = self.driver.get_cookies()
         # 登录后获取cookies存放本地yaml文件
         with open("../cookies.yaml", "w", encoding="utf-8") as f:

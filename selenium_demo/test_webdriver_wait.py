@@ -44,8 +44,9 @@ class TestWebDriverWait:
 
         # driver.find_element(By.CSS_SELECTOR,"#primary_btn").click()
         # driver.find_element(By.CSS_SELECTOR, "#primary_btn").click()
-        WebDriverWait(self.driver,10).until(more_clickable((By.CSS_SELECTOR,"#primary_btn"),(By.XPATH,"//*[text()='该弹框点击两次后才会弹出']")))
+        WebDriverWait(self.driver,10,3).until(more_clickable((By.CSS_SELECTOR,"#primary_btn"),(By.XPATH,"//*[text()='该弹框点击两次后才会弹出']")))
         time.sleep(3)
+
 
 
 

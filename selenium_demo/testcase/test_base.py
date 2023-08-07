@@ -20,6 +20,7 @@ class TestBase:
         self.mobile = fake.phone_number()
         self.home_page = LoginPage().login()
         self.timestamp = time.time()
+        self.company = fake.company()
 
     def teardown_class(self):
         self.home_page.do_quit()
