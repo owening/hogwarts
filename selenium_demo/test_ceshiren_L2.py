@@ -9,6 +9,7 @@
 '''
 import time
 
+import allure
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -16,6 +17,24 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from selenium_demo.log_utils import logger
+
+
+def ui_exception_record(func):
+    """
+    异常处理数据记录
+    :return:
+    """
+    def inner(*agrs, **kwargs):
+        self = agrs[0]
+        try:
+            return func(*agrs, **kwargs)
+        except Exception as e:
+            self.get_screenshot("search_result")
+            self.get_page_source("search_result")
+            logger.debug("将当前element对象的pagesource写入到html文件中")
+            print("找不到元素啦，赶紧看下")
+            raise e
+    return inner
 
 
 class TestCeShiRen:
@@ -28,34 +47,32 @@ class TestCeShiRen:
     def teardown(self):
         self.driver.quit()
 
-    def get_screenshot(self):
-
+    def get_screenshot(self, name):
         timestamp = int(time.time())
-        imagepath = f"./image/image_{timestamp}.PNG"
-        self.driver.save_screenshot(imagepath)
+        image_path = f"./image/image_{name}_{timestamp}.PNG"
+        self.driver.save_screenshot(image_path)
+        allure.attach.file(source=image_path, name="Picture", attachment_type=allure.attachment_type.PNG)
 
-    @pytest.mark.parametrize("keyword",["selenium","appium","面试"])
+    def get_page_source(self, name):
+        page_source_path = f"./page_source/{name}_page_source.html"
+        with open(page_source_path, "w", encoding="utf-8") as f:
+            f.write(self.driver.page_source)
+
+    # @pytest.mark.parametrize("keyword", ["selenium", "appium", "面试"])
+    @pytest.mark.parametrize("keyword", ["selenium"])
+    @ui_exception_record("keyword")
     def test_search(self, keyword):
         self.driver.get("https://ceshiren.com/")
         logger.info("访问测试人社区首页")
-        self.get_screenshot()
-        # self.driver.save_screenshot("ceshiren_main_page.png")
         url = "https://ceshiren.com/search?expanded=true"
         self.driver.find_element(By.CSS_SELECTOR, "#search-button").click()
         self.driver.find_element(By.CSS_SELECTOR, ".show-advanced-search").click()
         WebDriverWait(self.driver, 10).until(expected_conditions.url_to_be(url))
-        self.get_screenshot()
-        # self.driver.save_screenshot("advanced_search_page.png")
         logger.info(f"进入高级搜索页面,页面地址为：{self.driver.current_url}")
         self.driver.find_element(By.XPATH, "//*[@placeholder='搜索']").send_keys(keyword)
         logger.info(f"输入搜索关键字为：{keyword}")
         self.driver.find_element(By.CSS_SELECTOR, ".search-cta").click()
-        with open("page_source.txt", "w", encoding="utf-8") as f: f.write(self.driver.page_source)
-        logger.debug("将当前element对象的pagesource写入到文件page_source.txt中")
-        res_text = self.driver.find_element(By.CSS_SELECTOR, ".topic-title").text
-        self.get_screenshot()
-        # self.driver.save_screenshot("search_result.png")
+        res_text = self.driver.find_element(By.CSS_SELECTOR, ".topic-title1").text
         logger.info(f"搜索结果列表的第一个标题内容为：{res_text}")
         print(res_text)
         assert keyword in res_text.lower()
-
