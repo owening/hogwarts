@@ -11,6 +11,7 @@ import time
 
 import allure
 import pytest
+import six
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
@@ -21,9 +22,10 @@ from selenium_demo.log_utils import logger
 
 def ui_exception_record(func):
     """
-    异常处理数据记录
+    异常处理数据记录-装饰器
     :return:
     """
+    @six.wraps(func)
     def inner(*agrs, **kwargs):
         self = agrs[0]
         try:
@@ -60,7 +62,7 @@ class TestCeShiRen:
 
     # @pytest.mark.parametrize("keyword", ["selenium", "appium", "面试"])
     @pytest.mark.parametrize("keyword", ["selenium"])
-    @ui_exception_record("keyword")
+    @ui_exception_record
     def test_search(self, keyword):
         self.driver.get("https://ceshiren.com/")
         logger.info("访问测试人社区首页")
@@ -72,7 +74,7 @@ class TestCeShiRen:
         self.driver.find_element(By.XPATH, "//*[@placeholder='搜索']").send_keys(keyword)
         logger.info(f"输入搜索关键字为：{keyword}")
         self.driver.find_element(By.CSS_SELECTOR, ".search-cta").click()
-        res_text = self.driver.find_element(By.CSS_SELECTOR, ".topic-title1").text
+        res_text = self.driver.find_element(By.CSS_SELECTOR, ".topic-title").text
         logger.info(f"搜索结果列表的第一个标题内容为：{res_text}")
         print(res_text)
         assert keyword in res_text.lower()
