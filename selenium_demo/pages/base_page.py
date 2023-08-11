@@ -10,6 +10,7 @@ from selenium import webdriver
 
 
 class BasePage:
+    _BASE_URL = ""
 
     def __init__(self, base_driver=None):
 
@@ -20,21 +21,30 @@ class BasePage:
             self.driver.maximize_window()
             self.driver.implicitly_wait(5)
 
-    def do_find(self, by):
+        # if not self.driver.current_url.startswith("http"):
+        #     self.driver.get(self._BASE_URL)
+
+    def do_find(self, by, locator=None):
         """
          查找获取单个元素
         :param by:
         :return: 单个元素对象
         """
-        return self.driver.find_element(*by)
+        if locator:
+            return self.driver.find_element(by, locator)
+        else:
+            return self.driver.find_element(*by)
 
-    def do_finds(self, by):
+    def do_finds(self, by, locator=None):
         """
         查找获取多个元素
         :param by:
         :return: 多个元素对象列表
         """
-        return self.driver.find_elements(*by)
+        if locator:
+            return self.driver.find_elements(by, locator)
+        else:
+            return self.driver.find_elements(*by)
 
     def do_by_keyword_find(self, by, keywords):
         """
@@ -76,8 +86,6 @@ class BasePage:
         """
         self.driver.save_screenshot(filename)
 
-    def do_sleep(self,seconds=1):
+    def do_sleep(self, seconds=1):
         time.sleep(seconds)
-
-
 
