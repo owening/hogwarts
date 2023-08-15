@@ -9,6 +9,8 @@
 '''
 import time
 
+import allure
+
 from selenium_demo.testcase.test_base import TestBase
 
 

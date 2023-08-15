@@ -17,6 +17,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from selenium_demo.conftest import global_env
 from selenium_demo.log_utils import logger
 
 
@@ -42,9 +43,21 @@ def ui_exception_record(func):
 class TestCeShiRen:
 
     def setup(self):
-        self.driver = webdriver.Chrome()
+
+        # self.browser = global_env.get("browser")
+        # logger.info(f"指定浏览器为：{self.browser}")
+        # if self.browser == "firefox":
+        #     self.driver = webdriver.Firefox()
+        # else:
+        #     self.driver = webdriver.Chrome()
+
+        options = webdriver.ChromeOptions()
+        # options.add_argument("--headless")
+        # options.add_argument("start-maximized")
+        options.add_argument('window-size=375x812')
+        self.driver = webdriver.Chrome(options=options)
         self.driver.implicitly_wait(3)
-        self.driver.maximize_window()
+        # self.driver.maximize_window()
 
     def teardown(self):
         self.driver.quit()
@@ -65,6 +78,7 @@ class TestCeShiRen:
     @ui_exception_record
     def test_search(self, keyword):
         self.driver.get("https://ceshiren.com/")
+        time.sleep(10)
         logger.info("访问测试人社区首页")
         url = "https://ceshiren.com/search?expanded=true"
         self.driver.find_element(By.CSS_SELECTOR, "#search-button").click()
