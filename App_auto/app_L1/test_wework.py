@@ -12,34 +12,29 @@ import time
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from faker import Faker
-from selenium.common import NoSuchElementException
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.actions import interaction
-from selenium.webdriver.common.actions.action_builder import ActionBuilder
-from selenium.webdriver.common.actions.pointer_input import PointerInput
+from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-def sliding_find_element_wait(locator):
-    """
-    官方的 excepted_conditions 不可能覆盖所有场景
-    定制封装条件会更加灵活、可控
-    ### 显示等待高级用法，自定义结束条件
-    自定义结束条件函数下写内函数实现
-    """
-
+def swipe_find_element_wait(locator, direction, timeout=10):
     def inner(driver):
         screen_width = driver.get_window_size()['width']
         screen_height = driver.get_window_size()['height']
-        print(screen_width, screen_height)
+        end_time = time.time() + timeout * 1000
         while True:
             try:
                 element = driver.find_element(*locator)
-                # 找到元素后停止滑动
-                return element
-            except NoSuchElementException:
-                # 未找到元素，继续滑动
-                driver.swipe(screen_width / 2, screen_height * 0.8, screen_width / 2, screen_height * 0.2, 1000)
+                if element.is_displayed():
+                    # 找到元素可见后停止滑动,并return
+                    return element
+            except NoSuchElementException as e:
+                if time.time() > end_time:
+                    raise (e("未找到元素"), TimeoutException("滑动查找元素超时了"))
+            # 未找到元素，继续滑动
+            if direction == "UP":
+                driver.swipe(screen_width / 2, screen_height * 0.8, screen_width / 2, screen_height * 0.4)
+            elif direction == "DOWN":
+                driver.swipe(screen_width / 2, screen_height * 0.4, screen_width / 2, screen_height * 0.8)
 
     return inner
 
@@ -47,6 +42,7 @@ def sliding_find_element_wait(locator):
 class TestWeWork:
 
     def setup(self):
+        #初始化构造测试数据
         fake = Faker('zh_CN')
         self.name = fake.name()
         self.mobile = fake.phone_number()
@@ -58,7 +54,7 @@ class TestWeWork:
         caps['appPackage'] = 'com.tencent.wework'
         caps['appActivity'] = '.launch.LaunchSplashActivity'
         caps["noReset"] = "true"
-        # 打开企业微信，不清空用户信息
+        # 打开企业微信
         self.driver = webdriver.Remote("127.0.0.1:4723/wd/hub", caps)
         self.driver.implicitly_wait(5)
 
@@ -70,8 +66,8 @@ class TestWeWork:
         self.driver.find_element(AppiumBy.XPATH, "//*[@text='通讯录']").click()
         self.driver.find_element(AppiumBy.XPATH, "//*[@text='通讯录']").is_displayed()
 
-        #执行等待并查找元素
-        WebDriverWait(self.driver, 10).until(sliding_find_element_wait((AppiumBy.XPATH, "//*[@text='添加成员']")))
+        # 执行等待并查找元素
+        WebDriverWait(self.driver, 10).until(swipe_find_element_wait((AppiumBy.XPATH, "//*[@text='添加成员']"), "UP", 10))
         # 点击添加按钮跳转到添加成员页面。
         self.driver.find_element(AppiumBy.XPATH, "//*[@text='添加成员']").click()
 
@@ -82,15 +78,12 @@ class TestWeWork:
         self.driver.find_element(AppiumBy.ID, "com.tencent.wework:id/igg").send_keys(self.mobile)
         # 点击保存
         self.driver.find_element(AppiumBy.ID, "com.tencent.wework:id/b2s").click()
-        # 多断言：
-        # 所有的成员姓名是否包含添加时输入的姓名；
-        # 所有的成员手机号是否包含添加时输入的手机号；
+        # 返回通讯录页面,获取添加的成员信息
+        time.sleep(1)
         self.driver.back()
-        # eles = self.driver.find_elements(AppiumBy.ID, "com.tencent.wework:id/g60")
-        # name_list = []
-        # for ele in eles:
-        #     print(ele.text)
-        #     name_list.append(ele.text)
-        #
-        # print(f"所有成员姓名为：{name_list}")
-        # # assert self.name in name_list
+        WebDriverWait(self.driver, 10).until(
+            swipe_find_element_wait((AppiumBy.XPATH, f"//*[@text='{self.name}']"), "DOWN", 10))
+        result_str = self.driver.find_element(AppiumBy.XPATH, f"//*[@text='{self.name}']").text
+
+        # 断言所有的成员姓名是否包含添加时输入的姓名；
+        assert result_str == self.name
