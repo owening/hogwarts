@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2023/8/6 16:51
 # @Author  : Owen
-# @File    : base_page.py
+# @File    : base.py
 # @Software: PyCharm
 import time
 
@@ -21,8 +21,6 @@ class BasePage:
             self.driver.maximize_window()
             self.driver.implicitly_wait(5)
 
-        # if not self.driver.current_url.startswith("http"):
-        #     self.driver.get(self._BASE_URL)
 
     def do_find(self, by, locator=None):
         """
@@ -49,12 +47,12 @@ class BasePage:
     def do_by_keyword_find(self, by, keywords):
         """
         通过关键字定位信息定位元素
-        示例： '//*[text() =\'{}\']/../../td/input'.format(keywords)
+        示例： "//*[text() ='{}']/../../td/input".format(keywords)
         :param by:
         :param keywords:
         :return:
         """
-        return self.driver.find_element(by[0], by[1].format(keywords))
+        return self.do_find(by[0], by[1].format(keywords))
 
     def do_click(self, by):
         """

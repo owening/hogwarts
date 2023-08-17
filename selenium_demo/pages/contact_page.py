@@ -38,7 +38,7 @@ class ContactPage(BasePage):
 
     def delte_member(self, username):
         self.do_click(self._MENU_CONTACTS)
-        self.do_by_keywords_find(self._SELECT_MEMBER,username).click()
+        self.do_by_keyword_find(self._SELECT_MEMBER,username).click()
         self.do_click(self._DELETE_BTN)
         self.do_click(self._COMFIRM_DELETE)
         return self
