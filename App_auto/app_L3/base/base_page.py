@@ -40,8 +40,11 @@ class BasePage:
     def do_back(self):
         self.driver.back()
 
-    def get_page_source(self):
-        self.driver.page_source
+    def page_source(self):
+        return self.driver.page_source
+
+    def screenshot(self,filename):
+        self.driver.save_screenshot(filename)
 
     def by_keyword_find(self, by, keyword):
         """
@@ -52,3 +55,8 @@ class BasePage:
         :return:
         """
         return self.do_find(by[0], by[1].format(keyword))
+
+    def get_time(self):
+        t = time.localtime(time.time())
+        cur_time = time.strftime("%Y-%m-%d_%H_%M_%S",t)
+        return cur_time

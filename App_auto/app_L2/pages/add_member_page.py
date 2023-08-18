@@ -7,6 +7,8 @@
 @Author ：Owen
 @Date ：2023/8/17 16:17 
 '''
+import logging
+
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -28,5 +30,4 @@ class AddMemberPage(WeWorkApp):
         self.find_and_click(self._SAVE_BTN)
         # 获取toast提示框内容
         toast_element = self.find(self._ADD_SUCCESS_TOAST)
-        print(f"添加成员保存后toast框内容为：{toast_element.text}")
         return toast_element.text

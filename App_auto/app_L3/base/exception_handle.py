@@ -1,16 +1,15 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-'''
-@Project ：hogwarts 
-@File ：app_utils
-@IDE  ：PyCharm 
-@Author ：Owen
-@Date ：2023/8/17 19:35 
-'''
+# -*- coding: utf-8 -*-
+# @Time    : 2023/8/18 23:09
+# @Author  : Owen
+# @File    : exception_handle.py
+# @Software: PyCharm
+
+import logging
 import time
 
 import allure
-from appium.webdriver import WebElement
+
 
 from selenium.common import NoSuchElementException, TimeoutException
 
@@ -38,8 +37,10 @@ def swipe_exception(by: tuple, direction: str, timeout=10):
                     raise (e("未找到元素"), TimeoutException("滑动查找元素超时了"))
             # 未找到元素，继续滑动
             if direction == "UP":
+                logging.info("向上滑动，查找元素中...")
                 driver.swipe(screen_width / 2, screen_height * 0.8, screen_width / 2, screen_height * 0.4)
             elif direction == "DOWN":
+                logging.info("向下滑动，查找元素中...")
                 driver.swipe(screen_width / 2, screen_height * 0.4, screen_width / 2, screen_height * 0.8)
 
     return inner
@@ -47,12 +48,12 @@ def swipe_exception(by: tuple, direction: str, timeout=10):
 def app_exception_record(func):
 
     def inner(*agrs,**kwargs):
-        self:WebElement = agrs[0]
+        self = agrs[0]
         try:
             func(*agrs,**kwargs)
         except Exception as e:
-            print("异常啦，开始记录一下")
-            time_stamp = time.time()
+            logging.warning("执行过程中发生异常,记录截图和pagesource")
+            time_stamp = int(time.time())
             image_path = f"../image/{time_stamp}_image.PNG"
             page_source_path = f"../page_source/{time_stamp}_page_source.html"
             self.driver.save_screenshot(image_path)
@@ -60,4 +61,5 @@ def app_exception_record(func):
                 f.write(self.driver.page_source())
             allure.attach.file(image_path,name="image",attachment_type=allure.attachment_type.PNG)
             allure.attach.file(page_source_path,name="page_source",attachment_type=allure.attachment_type.TEXT)
+            raise e
     return inner
