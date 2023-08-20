@@ -9,8 +9,9 @@
 '''
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.wait import WebDriverWait
-from App_auto.app_L2.base.wework_app import WeWorkApp
-from App_auto.app_L2.utils.app_utils import swipe_exception
+
+from App_auto.app_L3.base.exception_handle import swipe_exception
+from App_auto.app_L3.base.wework_app import WeWorkApp
 
 
 class ContactPage(WeWorkApp):
@@ -18,6 +19,10 @@ class ContactPage(WeWorkApp):
 
 
     _ADD_MEMBER_MENU = (AppiumBy.XPATH, "//*[@text='添加成员']")
+    # _ADD_MEMBER_MENU = (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiScrollable(new UiSelector().'
+    #                                                     'scrollable(true).instance(0)).'
+    #                                                     'scrollIntoView(new UiSelector().text("添加成员")'
+    #                                                     '.instance(0));')
 
     _SELECT_MEMBER =(AppiumBy.XPATH, "//*[@text='{}']")
 
@@ -26,7 +31,7 @@ class ContactPage(WeWorkApp):
         WebDriverWait(self.driver, 10).until(swipe_exception(self._ADD_MEMBER_MENU, "UP", 15))
         # 点击添加按钮跳转到添加成员页面
         self.find_and_click(self._ADD_MEMBER_MENU)
-        from App_auto.app_L2.pages.add_member_collection_page import AddMemberCollectionPage
+        from App_auto.app_L3.pages.add_member_collection_page import AddMemberCollectionPage
         return AddMemberCollectionPage(self.driver)
 
 

@@ -13,7 +13,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from App_auto.app_L2.base.wework_app import WeWorkApp
+from App_auto.app_L3.base.wework_app import WeWorkApp
 
 
 class AddMemberPage(WeWorkApp):

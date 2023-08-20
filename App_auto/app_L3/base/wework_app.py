@@ -9,8 +9,7 @@
 '''
 from appium import webdriver
 
-from App_auto.app_L2.base.base_page import BasePage
-
+from App_auto.app_L3.base.base_page import BasePage
 
 
 class WeWorkApp(BasePage):
@@ -26,7 +25,7 @@ class WeWorkApp(BasePage):
             caps["noReset"] = "true"
             # 打开企业微信
             self.driver = webdriver.Remote("127.0.0.1:4723/wd/hub", caps)
-            self.driver.implicitly_wait(5)
+            self.driver.implicitly_wait(10)
         else:
             self.driver.launch_app()
         return self

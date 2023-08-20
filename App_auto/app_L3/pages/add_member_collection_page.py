@@ -9,8 +9,7 @@
 '''
 from appium.webdriver.common.appiumby import AppiumBy
 
-from App_auto.app_L2.base.wework_app import WeWorkApp
-
+from App_auto.app_L3.base.wework_app import WeWorkApp
 
 
 class AddMemberCollectionPage(WeWorkApp):
@@ -21,5 +20,5 @@ class AddMemberCollectionPage(WeWorkApp):
     def click_manual_input(self):
         # 点击手动输入添加
         self.find_and_click(self._MANUAL_INPUT_MENU)
-        from App_auto.app_L2.pages.add_member_page import AddMemberPage
+        from App_auto.app_L3.pages.add_member_page import AddMemberPage
         return AddMemberPage(self.driver)

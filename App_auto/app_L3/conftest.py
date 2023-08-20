@@ -7,9 +7,12 @@
 import os
 import time
 
-from faker.contrib import pytest
+
 
 # pytest 可以直接获取 rootdir 路径
+import pytest
+
+
 def get_rootdir(request):
     # 根目录
     rootdir = request.config.rootdir

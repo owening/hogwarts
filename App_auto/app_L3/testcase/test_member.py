@@ -10,7 +10,9 @@
 import logging
 
 from faker import Faker
-from App_auto.app_L2.base.wework_app import WeWorkApp
+
+from App_auto.app_L3.base.exception_handle import app_exception_record
+from App_auto.app_L3.base.wework_app import WeWorkApp
 
 
 class TestCase:
@@ -28,6 +30,7 @@ class TestCase:
         logging.info("关闭APP")
         self.main_page.stop()
 
+    @app_exception_record
     def test_add_member(self):
         logging.info(f"执行添加成员，输入用户名：{self.name} ,手机号：{self.mobile}")
         toast_result = self.main_page.click_goto_Contacts().clilk_add_member().click_manual_input().add_member(self.name,self.mobile)
