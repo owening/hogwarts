@@ -10,7 +10,9 @@
 import time
 
 from appium.webdriver.webdriver import WebDriver
-from selenium.common import NoSuchElementException, TimeoutException
+
+
+from App_auto.app_L3.base.exception_handle import app_exception_record
 
 
 class BasePage:
@@ -18,16 +20,17 @@ class BasePage:
     def __init__(self, base_driver: WebDriver = None):
         self.driver = base_driver
 
+    @app_exception_record
     def find(self, by):
         return self.driver.find_element(*by)
 
-    def find_and_send(self, by, text):
+    def find_and_send(self, text,by):
         return self.find(by).send_keys(text)
 
     def find_and_click(self, by):
         return self.find(by).click()
 
-    def find_and_text(self, by):
+    def get_text(self, by):
         return self.find(by).text
 
     def find_and_displayed(self, by):
@@ -46,7 +49,7 @@ class BasePage:
     def screenshot(self,filename):
         self.driver.save_screenshot(filename)
 
-    def by_keyword_find(self, by, keyword):
+    def by_keyword_find(self,keyword, by ):
         """
         通过关键字定位信息定位元素
         示例： "//*[text() ='{}']/../../td/input".format(keywords)
@@ -56,7 +59,7 @@ class BasePage:
         """
         return self.do_find(by[0], by[1].format(keyword))
 
-    def get_time(self):
+    def get_cur_time(self):
         t = time.localtime(time.time())
         cur_time = time.strftime("%Y-%m-%d_%H_%M_%S",t)
         return cur_time
