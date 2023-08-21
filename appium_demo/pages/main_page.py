@@ -6,7 +6,7 @@
 # @Software: PyCharm
 from appium.webdriver.common.appiumby import AppiumBy
 
-from appium_demo.base.wework_app import WeWorkApp
+
 
 
 class MainPage(WeWorkApp):

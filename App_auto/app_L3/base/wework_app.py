@@ -12,6 +12,7 @@ from appium import webdriver
 from App_auto.app_L3.base.base_page import BasePage
 
 
+
 class WeWorkApp(BasePage):
 
     def start(self):
@@ -20,6 +21,7 @@ class WeWorkApp(BasePage):
             caps["platformName"] = 'Android'
             caps['platformVersion'] = '6.0'
             caps['deviceName'] = 'emulator-5554'
+            caps['automationName'] = 'UiAutomator2'
             caps['appPackage'] = 'com.tencent.wework'
             caps['appActivity'] = '.launch.LaunchSplashActivity'
             caps["noReset"] = "true"
@@ -34,5 +36,5 @@ class WeWorkApp(BasePage):
         self.driver.quit()
 
     def goto_mainpage(self):
-        from App_auto.app_L2.pages.main_page import MainPage
+        from App_auto.app_L3.pages.main_page import MainPage
         return MainPage(self.driver)

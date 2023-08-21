@@ -6,12 +6,15 @@
 # @Software: PyCharm
 
 import logging
+import os
 import time
 
 import allure
 
 
 from selenium.common import NoSuchElementException, TimeoutException
+
+
 
 
 def swipe_exception(by: tuple, direction: str, timeout=10):
@@ -29,6 +32,7 @@ def swipe_exception(by: tuple, direction: str, timeout=10):
         end_time = time.time() + timeout * 1000
         while True:
             try:
+                logging.info(f"定位元素{by}and {type(by)}")
                 if driver.find_element(*by):
                     # 找到元素后停止滑动,并return
                     return driver.find_element(*by)
@@ -48,18 +52,24 @@ def swipe_exception(by: tuple, direction: str, timeout=10):
 def app_exception_record(func):
 
     def inner(*agrs,**kwargs):
-        self = agrs[0]
+        from App_auto.app_L3.base.base_page import BasePage
+        basepage:BasePage = agrs[0]
+        logging.info("当前保存图片的路径 >>>" + os.path.dirname(__file__))
         try:
             func(*agrs,**kwargs)
         except Exception as e:
             logging.warning("执行过程中发生异常,记录截图和pagesource")
-            time_stamp = int(time.time())
-            image_path = f"../image/{time_stamp}_image.PNG"
-            page_source_path = f"../page_source/{time_stamp}_page_source.html"
-            self.driver.save_screenshot(image_path)
-            with open(page_source_path,"w",encoding="utf-8") as f:
-                f.write(self.driver.page_source())
-            allure.attach.file(image_path,name="image",attachment_type=allure.attachment_type.PNG)
-            allure.attach.file(page_source_path,name="page_source",attachment_type=allure.attachment_type.TEXT)
+            cur_time = basepage.get_cur_time()
+            image_path = f"./{cur_time}_image.PNG"
+            # page_source_path = f"./{cur_time}_page_source.html"
+            basepage.screenshot(image_path)
+            logging.warning(f"执行截图{image_path}")
+            # with open(page_source_path,"w",encoding="utf-8") as f:
+            #     f.write(basepage.page_source())
+            # allure.attach.file(image_path,name="image",attachment_type=allure.attachment_type.PNG)
+            # allure.attach.file(page_source_path,name="page_source",attachment_type=allure.attachment_type.TEXT)
             raise e
     return inner
+
+# def get_rootdir():
+#     os.path.
