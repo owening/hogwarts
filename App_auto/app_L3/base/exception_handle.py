@@ -39,37 +39,42 @@ def swipe_exception(by: tuple, direction: str, timeout=10):
             except NoSuchElementException as e:
                 if time.time() > end_time:
                     raise (e("未找到元素"), TimeoutException("滑动查找元素超时了"))
-            # 未找到元素，继续滑动
-            if direction == "UP":
-                logging.info("向上滑动，查找元素中...")
-                driver.swipe(screen_width / 2, screen_height * 0.8, screen_width / 2, screen_height * 0.4)
-            elif direction == "DOWN":
-                logging.info("向下滑动，查找元素中...")
-                driver.swipe(screen_width / 2, screen_height * 0.4, screen_width / 2, screen_height * 0.8)
+                # 未找到元素，继续滑动
+                if direction == "UP":
+                    logging.info("向上滑动，查找元素中...")
+                    driver.swipe(screen_width / 2, screen_height * 0.8, screen_width / 2, screen_height * 0.4)
+                elif direction == "DOWN":
+                    logging.info("向下滑动，查找元素中...")
+                    driver.swipe(screen_width / 2, screen_height * 0.4, screen_width / 2, screen_height * 0.8)
 
     return inner
 
 def app_exception_record(func):
+    """
+    发生异常时进行截图和记录当前页面pagesource
+    :param func:
+    :return:
+    """
 
     def inner(*agrs,**kwargs):
         from App_auto.app_L3.base.base_page import BasePage
         basepage:BasePage = agrs[0]
-        logging.info("当前保存图片的路径 >>>" + os.path.dirname(__file__))
         try:
-            func(*agrs,**kwargs)
-        except Exception as e:
+            return func(*agrs,**kwargs)
+        except NoSuchElementException as e:
             logging.warning("执行过程中发生异常,记录截图和pagesource")
             cur_time = basepage.get_cur_time()
-            image_path = f"./{cur_time}_image.PNG"
-            # page_source_path = f"./{cur_time}_page_source.html"
+            image_name = f"{cur_time}_({basepage.driver.current_activity}).PNG"
+            image_path = os.path.join(os.path.dirname(__file__), "..", "images", image_name)
+            page_source_name = f"{cur_time}_({basepage.driver.current_activity}).html"
+            page_source_path = os.path.join(os.path.dirname(__file__), "..", "page_source", page_source_name)
+
             basepage.screenshot(image_path)
-            logging.warning(f"执行截图{image_path}")
-            # with open(page_source_path,"w",encoding="utf-8") as f:
-            #     f.write(basepage.page_source())
-            # allure.attach.file(image_path,name="image",attachment_type=allure.attachment_type.PNG)
-            # allure.attach.file(page_source_path,name="page_source",attachment_type=allure.attachment_type.TEXT)
+            with open(page_source_path,"w",encoding="utf-8") as f:
+                f.write(basepage.page_source())
+            allure.attach.file(image_path,name="images",attachment_type=allure.attachment_type.PNG)
+            allure.attach.file(page_source_path,name="page_source",attachment_type=allure.attachment_type.TEXT)
+            logging.error(f"跑出捕获的异常>>>{e}")
             raise e
     return inner
 
-# def get_rootdir():
-#     os.path.

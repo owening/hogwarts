@@ -55,7 +55,7 @@ class TestWorkWX:
         self.driver.find_element(By.XPATH,"//input[@id='memberAdd_phone']").send_keys(mobile)
         self.driver.find_element(By.XPATH,"//form[@class='js_member_editor_form']/div[3]/a[2]").click()
         time.sleep(1)
-        self.driver.save_screenshot("./image/add_member.PNG")
+        self.driver.save_screenshot("./images/add_member.PNG")
 
     @allure.story("删除成员")
     def test_deleted_member(self):
@@ -81,4 +81,4 @@ class TestWorkWX:
         self.driver.find_element(By.XPATH, "//*[@class='js_has_member']/div[1]/a[3]").click()
         self.driver.find_element(By.XPATH,"//*[@d_ck='submit_hr_helper']").click()
         time.sleep(1)
-        self.driver.save_screenshot("./image/add_member.PNG")
+        self.driver.save_screenshot("./images/add_member.PNG")

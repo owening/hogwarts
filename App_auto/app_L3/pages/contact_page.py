@@ -25,7 +25,7 @@ class ContactPage(WeWorkApp):
 
     def clilk_add_member(self):
         # 执行等待并查找元素
-        WebDriverWait(self.driver, 10).until(swipe_exception(self._ADD_MEMBER_MENU, "UP", 15))
+        WebDriverWait(self.driver, 10).until(swipe_exception(self._ADD_MEMBER_MENU, "UP", 10))
         # 点击添加按钮跳转到添加成员页面
         self.find_and_click(self._ADD_MEMBER_MENU)
         from App_auto.app_L3.pages.add_member_collection_page import AddMemberCollectionPage
@@ -34,5 +34,5 @@ class ContactPage(WeWorkApp):
     def get_member_info(self, keyword):
         # 返回通讯录页面,获取添加的成员信息
         ele = WebDriverWait(self.driver, 10).until(
-            swipe_exception((self._SELECT_MEMBER[0], self._SELECT_MEMBER[1].format(keyword)), "DOWN", 15))
+            swipe_exception((self._SELECT_MEMBER[0], self._SELECT_MEMBER[1].format(keyword)), "DOWN", 10))
         return ele.text

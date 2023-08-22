@@ -9,13 +9,12 @@
 '''
 import logging
 
+import allure
 from faker import Faker
-
-from App_auto.app_L3.base.exception_handle import app_exception_record
 from App_auto.app_L3.base.wework_app import WeWorkApp
 
-
-class TestCase:
+@allure.story("成员管理测试场景")
+class TestMember:
 
     def setup_class(self):
         logging.info("实例化构造测试数据对象")
@@ -37,15 +36,15 @@ class TestCase:
         logging.info("关闭APP")
         self.app.stop()
 
-
+    @allure.title("添加成员-成功")
     def test_add_member(self):
-        logging.info(f"执行添加成员，输入用户名：{self.name} ,手机号：{self.mobile}")
-        toast_result = self.main_page.click_goto_Contacts().clilk_add_member().click_manual_input().add_member(self.name,self.mobile).get_tips()
-        logging.info(f"添加成员保存后toast框内容为：{toast_result}")
+        with allure.step(f"执行添加成员，输入用户名：{self.name} ,手机号：{self.mobile}"):
+            toast_result = self.main_page.click_goto_Contacts().clilk_add_member().click_manual_input().add_member(self.name,self.mobile).get_tips()
+            logging.info(f"添加成员保存后toast框内容为：{toast_result}")
         self.main_page.do_sleep()
-        # logging.info("添加成功后返回通讯录页面")
-        self.main_page.do_back()
-        logging.info("执行获取添加成员的姓名")
-        result = self.main_page.click_goto_Contacts().get_member_info(self.name)
+        with allure.step("添加成功后返回通讯录页面"):
+            self.main_page.do_back()
+        with allure.step("执行获取添加成员的姓名"):
+            result = self.main_page.click_goto_Contacts().get_member_info(self.name)
         assert toast_result == "添加成功"
         assert result == self.name

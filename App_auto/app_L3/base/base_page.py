@@ -61,5 +61,5 @@ class BasePage:
 
     def get_cur_time(self):
         t = time.localtime(time.time())
-        cur_time = time.strftime("%Y-%m-%d_%H_%M_%S",t)
+        cur_time = time.strftime("%Y-%m-%d_%H%M%S",t)
         return cur_time
