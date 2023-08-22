@@ -11,7 +11,7 @@ import time
 
 from appium.webdriver.webdriver import WebDriver
 
-
+from App_auto.app_L3.base.black_handle import black_list_proce
 from App_auto.app_L3.base.exception_handle import app_exception_record
 
 
@@ -21,8 +21,14 @@ class BasePage:
         self.driver = base_driver
 
     @app_exception_record
+    @black_list_proce
     def find(self, by):
         return self.driver.find_element(*by)
+
+    @app_exception_record
+    @black_list_proce
+    def finds(self, by):
+        return self.driver.find_elements(*by)
 
     def find_and_send(self, text,by):
         return self.find(by).send_keys(text)
