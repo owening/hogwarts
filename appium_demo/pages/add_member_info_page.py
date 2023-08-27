@@ -18,7 +18,6 @@ class AddMemberInfoPage(WeWorkApp):
         self.find_send(name, self._NAME_INPUT)
         self.find_send(mobile, self._PHONE_INPUT)
         self.find_and_click(self._SAVE_BTN)
-        self.do_sleep(1)
         from appium_demo.pages.add_member_page import AddMemberPage
         return AddMemberPage(self.driver)
 

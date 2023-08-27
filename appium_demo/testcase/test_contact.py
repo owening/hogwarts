@@ -33,10 +33,9 @@ class TestContact:
         assert tips == "添加成功"
 
 
-    # def test_delete_member(self):
-    #
-    #     member_list = self.main.click_goto_Contacts().goto_person_info(self.name) \
-    #         .select_operate().edit_person_info().select_delete().confirm_delete_member() \
-    #         .goto_search_page().search_member(self.name)
-    #     assert len(member_list) == 0
+    def test_delete_member(self):
+        member_list = self.main.click_goto_Contacts().goto_person_info(self.name) \
+            .select_operate().edit_person_info().select_delete().confirm_delete_member() \
+            .goto_search_page().search_member(self.name)
+        assert len(member_list) == 0
 

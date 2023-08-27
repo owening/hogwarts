@@ -13,6 +13,6 @@ class ConfirmDeletePage(WeWorkApp):
     _BTN_CONFIRM = AppiumBy.XPATH, '//*[@text="删除"]'
 
     def confirm_delete_member(self):
-        self.find_and_click(*self._BTN_CONFIRM)
+        self.find_and_click(self._BTN_CONFIRM)
         from appium_demo.pages.contact_page import ContactPage
         return ContactPage(self.driver)

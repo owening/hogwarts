@@ -40,11 +40,12 @@ class ContactPage(WeWorkApp):
         return ele.text
 
     def goto_person_info(self, name):
-        self.swipe_find((AppiumBy.XPATH, f"//*[@text='{name}']")).click()
+        by = AppiumBy.XPATH, f"//*[@text='{name}']"
+        self.swipe_find(by).click()
         from appium_demo.pages.person_info_page import PersonInfoPage
         return PersonInfoPage(self.driver)
 
     def goto_search_page(self):
-        self.find_and_click(*self._BTN_SEARCH)
+        self.find_and_click(self._BTN_SEARCH)
         from appium_demo.pages.search_member_page import SearchMemberPage
         return SearchMemberPage(self.driver)

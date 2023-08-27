@@ -17,6 +17,6 @@ class EditMemberPage(WeWorkApp):
 
 
     def select_delete(self):
-        self.swipe_find(*self._BTN_DELETE_MEMBER).click()
+        self.swipe_find(self._BTN_DELETE_MEMBER).click()
         from appium_demo.pages.confirm_delete_page import ConfirmDeletePage
         return ConfirmDeletePage(self.driver)

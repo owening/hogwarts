@@ -41,4 +41,4 @@ class WeWorkApp(BasePage):
         停止app
         :return:
         """
-        self.quit()
+        self.driver.quit()

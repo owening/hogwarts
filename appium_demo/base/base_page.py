@@ -34,7 +34,6 @@ class BasePage():
     def find_and_displayed(self, by):
         return self.find(by).is_displayed()
 
-
     def set_implicitly_wait(self, time=1):
         """
         封装隐式等待
@@ -43,9 +42,8 @@ class BasePage():
         """
         self.driver.implicitly_wait(time)
 
-
     def get_tips(self, by):
-        self.find(by).text
+        return self.find(by).text
 
     def do_sleep(self, seconds=1):
         time.sleep(seconds)
@@ -84,11 +82,11 @@ class BasePage():
                 duration = 2000
                 self.driver.swipe(startx, starty, endx, endy, duration)
         self.set_implicitly_wait(self.IMPLICITLY_WAIT)
-        raise NoSuchElementException(f"使用 {by} 定位方式进行{value}的查找，找了{max_num}次并未找到")
+        raise NoSuchElementException(f"使用 {by[0]} 定位方式进行{by[1]}的查找，找了{max_num}次并未找到")
 
     def get_cur_time(self):
         t = time.localtime(time.time())
-        cur_time = time.strftime("%Y-%m-%d_%H%M%S",t)
+        cur_time = time.strftime("%Y-%m-%d_%H%M%S", t)
         return cur_time
 
     def page_source(self):
