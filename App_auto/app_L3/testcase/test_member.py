@@ -47,3 +47,13 @@ class TestMember:
             result = self.main_page.click_goto_Contacts().get_member_info(self.name)
         assert toast_result == "添加成功"
         assert result == self.name
+
+    def test_delete_member(self):
+        self.main_page.click_goto_Contacts().clilk_add_member().click_manual_input().add_member(self.name, self.mobile)
+        self.main_page.do_sleep()
+        self.main_page.do_back()
+
+
+        self.main_page.click_goto_Contacts().search_member_by_name(self.name).click_three_point()\
+            .click_edit_member().confirm_delete_member()
+        self.main_page.do_sleep(2)

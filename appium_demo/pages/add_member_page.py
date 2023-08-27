@@ -9,17 +9,20 @@ from appium.webdriver.common.appiumby import AppiumBy
 from appium_demo.base.wework_app import WeWorkApp
 
 
+
 class AddMemberPage(WeWorkApp):
 
     _ADD_BY_MANUAL = AppiumBy.XPATH,"//*[@text='手动输入添加']"
 
     _TOAST_TIP_TEXT = AppiumBy.XPATH,"//*[@text='添加成功']"
 
-    def click_add_by_manual(self):
-        self.find_click(self._ADD_BY_MANUAL)
-        from appium_demo.pages.edit_member_page import EitdMemberPage
-        return EitdMemberPage(self.driver)
+    def click_manual_input(self):
+        self.find_and_click(self._ADD_BY_MANUAL)
+        from appium_demo.pages.add_member_info_page import AddMemberInfoPage
+        return AddMemberInfoPage(self.driver)
 
     def get_tips_result(self) -> str:
         return self.get_tips(self._TOAST_TIP_TEXT)
+
+
 
