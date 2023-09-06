@@ -6,7 +6,7 @@
 # @Software: PyCharm
 from appium.webdriver.common.appiumby import AppiumBy
 
-from appium_demo.base.wework_app import WeWorkApp
+from appium_demo.pages.wework.wework_app import WeWorkApp
 
 
 class ConfirmDeletePage(WeWorkApp):
@@ -14,5 +14,5 @@ class ConfirmDeletePage(WeWorkApp):
 
     def confirm_delete_member(self):
         self.find_and_click(self._BTN_CONFIRM)
-        from appium_demo.pages.contact_page import ContactPage
+        from appium_demo.pages.wework.contact_page import ContactPage
         return ContactPage(self.driver)

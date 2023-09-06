@@ -28,7 +28,7 @@ logger.addHandler(ch)
 
 
 # logging.basicConfig(
-#     filename='myapp.log',
+#     filename='myapp.logs',
 #     level=logging.INFO,
 #     format='%(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)',
 #     datefmt='%m/%d/%Y %I:%M:%S %p')

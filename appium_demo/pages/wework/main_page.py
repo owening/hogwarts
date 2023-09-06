@@ -9,7 +9,7 @@
 '''
 from appium.webdriver.common.appiumby import AppiumBy
 
-from appium_demo.base.wework_app import WeWorkApp
+from appium_demo.pages.wework.wework_app import WeWorkApp
 
 
 class MainPage(WeWorkApp):
@@ -21,5 +21,5 @@ class MainPage(WeWorkApp):
         self.find_and_displayed(self._CONTACTS_MENU)
         self.find_and_click(self._CONTACTS_MENU)
         # 进入到通讯录页面
-        from appium_demo.pages.contact_page import ContactPage
+        from appium_demo.pages.wework.contact_page import ContactPage
         return ContactPage(self.driver)

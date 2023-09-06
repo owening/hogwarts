@@ -6,7 +6,7 @@
 # @Software: PyCharm
 from appium.webdriver.common.appiumby import AppiumBy
 
-from appium_demo.base.wework_app import WeWorkApp
+from appium_demo.pages.wework.wework_app import WeWorkApp
 
 
 
@@ -15,5 +15,5 @@ class PersonInfoPage(WeWorkApp):
 
     def select_operate(self):
         self.find_and_click(self._BTN_OPERATE)
-        from appium_demo.pages.operate_person_page import OperatePersonPage
+        from appium_demo.pages.wework.operate_person_page import OperatePersonPage
         return OperatePersonPage(self.driver)

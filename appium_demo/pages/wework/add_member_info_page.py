@@ -6,7 +6,7 @@
 # @Software: PyCharm
 from appium.webdriver.common.appiumby import AppiumBy
 
-from appium_demo.base.wework_app import WeWorkApp
+from appium_demo.pages.wework.wework_app import WeWorkApp
 
 
 class AddMemberInfoPage(WeWorkApp):
@@ -18,6 +18,6 @@ class AddMemberInfoPage(WeWorkApp):
         self.find_send(name, self._NAME_INPUT)
         self.find_send(mobile, self._PHONE_INPUT)
         self.find_and_click(self._SAVE_BTN)
-        from appium_demo.pages.add_member_page import AddMemberPage
+        from appium_demo.pages.wework.add_member_page import AddMemberPage
         return AddMemberPage(self.driver)
 

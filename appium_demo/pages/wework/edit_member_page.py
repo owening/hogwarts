@@ -5,9 +5,8 @@
 # @File    : edit_member_page.py
 # @Software: PyCharm
 from appium.webdriver.common.appiumby import AppiumBy
-from selenium.webdriver.support.wait import WebDriverWait
 
-from appium_demo.base.wework_app import WeWorkApp
+from appium_demo.pages.wework.wework_app import WeWorkApp
 
 
 class EditMemberPage(WeWorkApp):
@@ -18,5 +17,5 @@ class EditMemberPage(WeWorkApp):
 
     def select_delete(self):
         self.swipe_find(self._BTN_DELETE_MEMBER).click()
-        from appium_demo.pages.confirm_delete_page import ConfirmDeletePage
+        from appium_demo.pages.wework.confirm_delete_page import ConfirmDeletePage
         return ConfirmDeletePage(self.driver)

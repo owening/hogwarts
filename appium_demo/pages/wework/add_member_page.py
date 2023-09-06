@@ -6,7 +6,7 @@
 # @Software: PyCharm
 from appium.webdriver.common.appiumby import AppiumBy
 
-from appium_demo.base.wework_app import WeWorkApp
+from appium_demo.pages.wework.wework_app import WeWorkApp
 
 
 
@@ -18,7 +18,7 @@ class AddMemberPage(WeWorkApp):
 
     def click_manual_input(self):
         self.find_and_click(self._ADD_BY_MANUAL)
-        from appium_demo.pages.add_member_info_page import AddMemberInfoPage
+        from appium_demo.pages.wework.add_member_info_page import AddMemberInfoPage
         return AddMemberInfoPage(self.driver)
 
     def get_tips_result(self) -> str:

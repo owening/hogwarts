@@ -6,23 +6,33 @@
 # @Software: PyCharm
 import time
 
+import allure
 from appium.webdriver.webdriver import WebDriver
 from selenium.common import NoSuchElementException
 
 from appium_demo.base.exception_handle import app_exception_record
+from appium_demo.utils.data_util import DataUtil
+from appium_demo.utils.error_handle import black_wrapper
+from appium_demo.utils.log_util import logger
 
 
 class BasePage():
+    IMPLICITLY_WAIT = 10
 
     def __init__(self, driver=None):
         self.driver: WebDriver = driver
 
-    # @app_exception_record
+    @black_wrapper
     def find(self, by):
-        return self.driver.find_element(*by)
+        step_text = f"使用 {by[0]} 的定位方式进行 {by[1]} 的定位操作"
+        logger.info(step_text)
+        with allure.step(step_text):
+            return self.driver.find_element(*by)
 
-    # @app_exception_record
+    @black_wrapper
     def finds(self, by):
+        step_text = f"使用 {by[0]} 的定位方式进行 {by[1]} 的定位操作"
+        logger.info(step_text)
         return self.driver.find_elements(*by)
 
     def find_and_click(self, by):
@@ -41,6 +51,9 @@ class BasePage():
         :return:
         """
         self.driver.implicitly_wait(time)
+
+    def quit(self):
+        self.driver.quit()
 
     def get_tips(self, by):
         return self.find(by).text
@@ -90,7 +103,19 @@ class BasePage():
         return cur_time
 
     def page_source(self):
-        return self.driver.page_source
+        filename = DataUtil.save_source_datas("pagesource")
+        # 写 page source 文件
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(self.driver.page_source)
+        logger.info(f"源码保存的路径为{filename}")
+        # 返回 page source 保存路径
+        return filename
 
-    def screenshot(self, filename):
+    def screenshot(self):
+        """
+        截图
+        """
+        filename = DataUtil.save_source_datas("images")
         self.driver.save_screenshot(filename)
+        logger.info(f"截图保存的路径为{filename}")
+        return filename

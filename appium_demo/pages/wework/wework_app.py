@@ -27,12 +27,12 @@ class WeWorkApp(BasePage):
             caps["noReset"] = "true"
             # 打开企业微信
             self.driver = webdriver.Remote("127.0.0.1:4723/wd/hub", caps)
-            self.driver.implicitly_wait(20)
+            self.set_implicitly_wait(self.IMPLICITLY_WAIT)
         return self
 
     def goto_main(self):
 
-        from appium_demo.pages.main_page import MainPage
+        from appium_demo.pages.wework.main_page import MainPage
         return MainPage(self.driver)
 
 
@@ -41,4 +41,4 @@ class WeWorkApp(BasePage):
         停止app
         :return:
         """
-        self.driver.quit()
+        self.quit()

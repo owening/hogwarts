@@ -70,10 +70,6 @@ class TestWeWork:
         WebDriverWait(self.driver, 10).until(swipe_exception((AppiumBy.XPATH, "//*[@text='添加成员']"), "UP", 10))
 
         self.driver.find_element(AppiumBy.XPATH,"//*[@text='添加成员']").click()
-        # self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiScrollable(new UiSelector().'
-        #                                                 'scrollable(true).instance(0)).'
-        #                                                 'scrollIntoView(new UiSelector().text("添加成员")'
-        #                                                 '.instance(0));').click()
 
         self.driver.find_element(AppiumBy.XPATH,"//*[@text='手动输入添加']").click()
         self.driver.find_element(AppiumBy.XPATH,"//*[@text='姓名']/../*[@text='必填']").send_keys(self.name)
