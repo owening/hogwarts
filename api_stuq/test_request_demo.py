@@ -54,3 +54,10 @@ def test_req():
     print(res.json())
     assert res.status_code == 200
     assert res.json()["json"]["name"] == "Owen"
+
+
+
+
+
+
+

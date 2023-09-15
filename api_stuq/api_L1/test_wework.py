@@ -26,7 +26,6 @@ class TestWeWork:
         self.corpsecret = "0qjRWh5cnLgJQPUDLB2uHMwJn0h0KgKr93NBbyEDso0"
         self.baseurl = "https://qyapi.weixin.qq.com/cgi-bin"
         self.get_token_url = self.baseurl + "/gettoken"
-        pass
 
     @allure.story("获取access_token成功用例")
     def test_get_token(self):

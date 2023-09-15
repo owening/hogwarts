@@ -8,11 +8,9 @@
 import logging
 import os
 from logging.handlers import RotatingFileHandler
-
+from api_stuq.api_L2.utils.data_util import DataUtil
 
 # 绑定绑定句柄到logger对象
-from api_stuq.api_L1.utils.data_util import DataUtil
-
 logger = logging.getLogger(__name__)
 
 # 拼接当前要输出日志的路径
@@ -20,6 +18,7 @@ log_dir_path = os.sep.join([DataUtil.get_root_path(), "/logs"])
 
 # 当文件目录不存在时，则创建一个文件目录
 if not os.path.isdir(log_dir_path):
+    print("测试创建文件目录", log_dir_path)
     os.mkdir(log_dir_path)
 
 # 创建日志记录器，指明日志保存路径,每个日志的大小，保存日志的上限,backupCount日志文件数据上限

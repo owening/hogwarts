@@ -19,7 +19,6 @@ class DataUtil:
         """
         获取appium项目绝对路径
         """
-        print("测试路径",os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     @staticmethod
@@ -46,30 +45,10 @@ class DataUtil:
             yaml_data = yaml.safe_load(f)
         return yaml_data
 
-    def get_member_data(self):
-        """
-        获取用户列表数据
-        """
-        member_data = DataUtil.get_yaml_data("member_info.yaml")
-        return member_data
+    # def get_member_data(self):
+    #     """
+    #     获取用户列表数据
+    #     """
+    #     member_data = DataUtil.get_yaml_data("xxx")
+    #     return member_data
 
-    def save_source_datas(self,source_type):
-
-        if source_type == "images":
-            end = ".png"
-            _path = "images"
-        elif source_type == "pagesource":
-            end = "_page_source.xml"
-            _path = "page_source"
-        else:
-            return
-        #以当前时间拼接扩展名，定义命令
-        source_name = DataUtil.get_current_time()+end
-        #获取项目路径再拼接对应source_type的目录
-        source_dir_path = os.sep.join([DataUtil.get_root_path(),_path])
-
-        if not os.path.isdir(source_dir_path):
-            os.mkdir(source_dir_path)
-
-        source_file_path = os.sep.join([source_dir_path,source_name])
-        return source_file_path
