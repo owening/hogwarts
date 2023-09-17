@@ -4,6 +4,8 @@
 # @Author  : Owen
 # @File    : test_tag.py
 # @Software: PyCharm
+import jsonpath
+
 from interface.wework.api.tag_api import TagApi
 
 
@@ -20,3 +22,8 @@ class TestTag:
         res = self.tag_api.get(tag_id)
         self.tag_api.delete(tag_id)
         assert res["tagname"] == "刺客"
+
+    def test_tag_list(self):
+        tag_list_res = self.tag_api.list()
+        print(tag_list_res)
+        # jsonpath.jsonpath(tag_list_res,"")

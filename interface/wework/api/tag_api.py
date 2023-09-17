@@ -13,18 +13,21 @@ class TagApi(WeWorkApi):
 
     def create(self, tag_info):
         url = "tag/create"
-        res = self.send("post", url, params={"access_token": self.token}, json=tag_info)
-        return res
+        return self.send("post", url, json=tag_info)
+
 
     def delete(self, tagid):
         url = "tag/delete"
-        res = self.send("get", url, params={"access_token": self.token, "tagid": tagid})
-        return res
+        return self.send("get", url, params={"tagid": tagid})
+
 
     def update(self):
         pass
 
     def get(self, tag_id):
         url = "tag/get"
-        res = self.send("get", url, params={"access_token": self.token, "tagid": tag_id})
-        return res
+        return self.send("get", url, params={"tagid": tag_id})
+
+    def list(self):
+        url = "tag/list"
+        return self.send("get",url)
