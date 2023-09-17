@@ -25,7 +25,7 @@ class WeWorkApi:
         return token
 
     def send(self, method, url, **kwargs):
-        if kwargs["params"]:
+        if kwargs.get("params"):
             kwargs["params"].update({"access_token": self.token})
         else:
             kwargs["params"] = {"access_token": self.token}

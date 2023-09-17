@@ -25,5 +25,5 @@ class TestTag:
 
     def test_tag_list(self):
         tag_list_res = self.tag_api.list()
-        print(tag_list_res)
-        # jsonpath.jsonpath(tag_list_res,"")
+        assert jsonpath.jsonpath(tag_list_res,"$..taglist[?(@.tagid==26)].tagname")[0] == "热销"
+
