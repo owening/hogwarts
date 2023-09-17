@@ -7,8 +7,11 @@ from unittest import TestCase
 
 
 # @Software: PyCharm
-from L2.hero_fight import fight
-from L2.hero_other import APCHero, TopHero
+
+
+
+from python_L2.hero_fight import fight
+from python_L2.hero_other import APCHero, TopHero
 
 
 class Test(TestCase):
