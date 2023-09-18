@@ -43,4 +43,4 @@ logger.addHandler(stream_handler)
 logger.addHandler(file_log_handler)
 
 # 设置日志输出级别
-logger.setLevel(level=logging.INFO)
+logger.setLevel(level=logging.DEBUG)

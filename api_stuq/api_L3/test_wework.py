@@ -13,10 +13,8 @@ import allure
 import jsonpath
 import pytest
 import requests
-from genson import SchemaBuilder
-from jsonschema import validate
-
 from api_stuq.api_L2.utils.log_util import logger
+from api_stuq.api_L3.utils.jsonschema_utils import JSONSchemaUtils
 
 """
 
@@ -84,17 +82,16 @@ class TestWeWork:
             assert res.status_code == 200
             assert expect in res_str
 
+    @allure.story("获取标签列表")
     def test_get_lables_list(self, token):
         url = "/tag/list"
         res = requests.request(method="get", url=self.baseurl + url, params={"access_token": token}, proxies=self.proxy,
                                verify=False)
-        # print(res.json())
-        #生成jsonschema
-        builder = SchemaBuilder()
-        builder.add_object(res.json())
-        schema_res = builder.to_schema()
-        #见生成jsonschema数据写入文件
-        with open("schema.json", "w") as f:
-            json.dump(schema_res, f)
+        assert res.status_code == 200
+        assert JSONSchemaUtils.validate_schema_by_file(res.json(), "schema.json") == True
+
+
+
+
 
 
