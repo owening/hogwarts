@@ -7,6 +7,8 @@
 @Author ：Owen
 @Date ：2023/9/19 10:08 
 '''
+import os
+
 import requests
 
 from api_stuq.api_L4.utils.log_util import logger
@@ -15,6 +17,7 @@ from api_stuq.api_L4.utils.log_util import logger
 class WeWorkAPI:
 
     def __init__(self):
+        os.getenv("test")
         self.base_url = "https://qyapi.weixin.qq.com/cgi-bin/"
         self.corpid = "wwc21827e63c44f94f"
         self.corpsecret = "0qjRWh5cnLgJQPUDLB2uHMwJn0h0KgKr93NBbyEDso0"
