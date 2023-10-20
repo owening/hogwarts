@@ -1,0 +1,10 @@
+# test.yaml 测试环境的配置
+env_config:
+  base_url: https://httpbin.org/
+db_config:
+  host: httpbin.org
+  username:  xxxx
+  password:  xxxx
+redis_config:
+  host: httpbin.org
+  port: 8100

@@ -1,0 +1,10 @@
+# pre.yaml 预发布环境的配置
+env_config:
+  base_url: https://httpbin.ceshiren.com/
+db_config:
+  host: httpbin.ceshiren.com
+  username:  xxxx
+  password:  xxxx
+redis_config:
+  host: httpbin.ceshiren.com
+  port: 8100
