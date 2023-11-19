@@ -4,8 +4,8 @@
 # @Author  : Owen
 # @File    : test_tag.py
 # @Software: PyCharm
-import jsonpath
 
+import jsonpath
 from interface.wework.api.tag_api import TagApi
 
 
