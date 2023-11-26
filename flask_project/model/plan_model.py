@@ -4,6 +4,7 @@
 # @Author  : Owen
 # @File    : plan_model.py
 # @Software: PyCharm
+from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import relationship
@@ -26,6 +27,8 @@ class PlanModel(Base):
     name = Column(String(80), nullable=False, unique=True)
     # 测试用例列表
     testcases = relationship("TestcaseModel", secondary=testcase_plan_rel, backref='plan')
+    # 创建时间
+    create_time = Column(DateTime, nullable=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def __repr__(self):
         # 数据库的 魔法方法 直观展示数据
@@ -37,4 +40,5 @@ class PlanModel(Base):
             "id": self.id,
             "name": self.name,
             "testcases": [testcase.as_dict() for testcase in self.testcases],
+            "create_time": str(self.create_time)
         }

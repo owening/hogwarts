@@ -6,7 +6,7 @@
 # @Software: PyCharm
 
 from flask_project.model.user_model import UserModel
-from flask_project.server import db_session
+from flask_project.server import DBSession as db_session
 
 # Dao 负责和数据库的交互
 class UserDao:
@@ -16,6 +16,12 @@ class UserDao:
         根据 ID 查询用户
         '''
         return db_session.query(UserModel).filter_by(id=user_id).first()
+
+    def list(self) -> UserModel:
+        '''
+        查询所有
+        '''
+        return db_session.query(UserModel).all()
 
     def get_by_name(self, user_name) -> UserModel:
         '''

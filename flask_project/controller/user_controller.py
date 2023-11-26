@@ -70,3 +70,20 @@ def user_login():
         return {"code": 0, "msg": "login success", "data": {"token": access_token}}
     else:
         return {"code": 40021, "msg": "login fail"}
+
+
+@user_router.route("/user/get")
+def user_list():
+    """
+    获取所有用户数据
+    :return:
+    """
+    # 获取请求参数
+    data = user_service.list()
+    if data:
+        # 如果查到数据，则返回给前端
+        datas = [_.as_dict() for _ in data]
+        return {"code": 0, "msg": "get userinfo success", "data": datas}
+    else:
+        # 如果没有数据，则返回数据已存在
+        return {"code": 40001, "msg": "userinfo is not exists"}

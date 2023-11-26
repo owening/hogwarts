@@ -24,7 +24,8 @@ class TestcaseService:
         """
         更新用例
         """
-        if testcase_dao.get_by_name(testcase_model.name):
+        # if testcase_dao.get_by_name(testcase_model.name):
+        if testcase_dao.get_by_id(testcase_model.id):
             testcase_dao.update(testcase_model)
         return testcase_model.id
 
@@ -45,7 +46,7 @@ class TestcaseService:
         """
         获取某个测试用例
         """
-        return testcase_dao.get(testcase_id)
+        return testcase_dao.get_by_id(testcase_id)
 
     def get_by_name(self, testcase_name: int) -> TestcaseModel:
         """

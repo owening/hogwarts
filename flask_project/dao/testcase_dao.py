@@ -5,11 +5,11 @@
 # @File    : testcase_dao.py
 # @Software: PyCharm
 from flask_project.model.testcase_model import TestcaseModel
-from flask_project.server import db_session
+from flask_project.server import DBSession as db_session
 # Dao 负责和数据库的交互
 class TestcaseDao:
 
-    def get(self, testcase_id: int) -> TestcaseModel:
+    def get_by_id(self, testcase_id: int) -> TestcaseModel:
         """
         添加用例
         :param testcase_id: 用例id

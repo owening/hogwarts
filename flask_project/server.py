@@ -9,7 +9,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session, declarative_base
+from sqlalchemy.orm import sessionmaker, Session, declarative_base, scoped_session
 
 # 定义 app
 app = Flask(__name__)
@@ -36,8 +36,25 @@ db_url = f'mysql+pymysql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}?cha
 # 创建引擎，连接到数据库
 engine = create_engine(db_url, echo=True)
 # 创建session对象
-DBSession = sessionmaker(bind=engine)
-db_session: Session = DBSession()
+# DBSession = sessionmaker(bind=engine)
+# db_session: Session = DBSession()
+DBSession = scoped_session(sessionmaker(bind=engine))
+
+
+@app.before_request
+def before_request():
+    # 在每个请求前执行的代码
+    # 在请求开始的时候实例化DBsession
+    DBSession()
+
+
+@app.teardown_request
+def teardown_request(exception=None):
+    # 在每个请求后执行的代码
+    if exception:
+        DBSession.rollback()
+    # 请求结束之后remove掉DBsession
+    DBSession.remove()
 
 
 def register_router():

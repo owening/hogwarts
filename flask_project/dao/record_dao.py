@@ -6,7 +6,7 @@
 # @Software: PyCharm
 
 from flask_project.model.record_model import RecordModel
-from flask_project.server import db_session
+from flask_project.server import DBSession as db_session
 
 # Dao 负责和数据库的交互
 class RecordDao:

@@ -24,6 +24,12 @@ class UserService:
         '''
         return user_dao.get(user_id)
 
+    def list(self) -> UserModel:
+        '''
+        查询所有用户
+        '''
+        return user_dao.list()
+
     def get_by_name(self, user_name):
         '''
         通过姓名查询用户
