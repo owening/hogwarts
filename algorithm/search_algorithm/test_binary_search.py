@@ -18,7 +18,6 @@
 重复以上的过程直到找到目标元素或确定目标元素不存在于数组中。
 """
 
-
 def binary_search(nums, target):
     low = 0
     high = len(nums) - 1

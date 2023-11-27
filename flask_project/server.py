@@ -27,9 +27,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 Base = declarative_base()
 # 定义数据库
 db_user = "root"
-db_pass = 123456
-db_host = "42.192.73.147"
-db_port = "3307"
+db_pass = "owen123"
+db_host = "121.37.219.141"
+db_port = "3306"
 db_name = "owen_db"
 # 数据库类型+数据库引擎（ pip install pymysql）
 db_url = f'mysql+pymysql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}?charset=utf8mb4'
