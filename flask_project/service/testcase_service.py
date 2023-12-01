@@ -6,6 +6,9 @@
 # @Software: PyCharm
 
 from typing import List
+
+from flask_jwt_extended import get_jwt_identity
+
 from flask_project.dao.testcase_dao import TestcaseDao
 from flask_project.model.testcase_model import TestcaseModel
 testcase_dao = TestcaseDao()
@@ -16,8 +19,11 @@ class TestcaseService:
         """
         创建用例
         """
+        # 获取登录token对应用户名
+        username = get_jwt_identity().get("username")
         result = testcase_dao.get_by_name(testcase_model.name)
         if not result:
+            testcase_model.update_by = username
             return testcase_dao.create(testcase_model)
 
     def update(self, testcase_model: TestcaseModel) -> int:

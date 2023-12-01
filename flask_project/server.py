@@ -19,7 +19,7 @@ CORS(app, supports_credentials=True)
 # 注册 jwt
 jwt = JWTManager(app)
 # 配置服务端密钥
-app.config["JWT_SECRET_KEY"] = "hogwarts_user_AHKFJJD5"
+app.config["JWT_SECRET_KEY"] = "owen_user_AHKFJJD5"
 # 开启数据库跟踪模式
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 

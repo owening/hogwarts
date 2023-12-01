@@ -7,7 +7,7 @@
 
 from datetime import timedelta
 
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, decode_token
 
 from flask_project.dao.user_dao import UserDao
 from flask_project.model.user_model import UserModel
@@ -61,6 +61,10 @@ class UserService:
                 expires_delta=timedelta(days=1)
             )
             return token
+
+    def get_token_user(self,token):
+        username = decode_token(token)
+        return username
 
     # 配置回调函数中验证数据条件
     @jwt.user_lookup_loader

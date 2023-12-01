@@ -4,9 +4,10 @@
 # @Author  : Owen
 # @File    : plan_controller.py
 # @Software: PyCharm
+import logging
 
 from flask import Blueprint, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from flask_project.model.plan_model import PlanModel
 from flask_project.service.plan_service import PlanService

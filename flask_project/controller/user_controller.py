@@ -27,7 +27,6 @@ def user_register():
     data = request.json
     # 构建用户对象
     user = UserModel(**data)
-    print(user.password)
     if user:
         user_id = user_service.create(user)
         if user_id:

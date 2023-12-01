@@ -4,12 +4,18 @@
 # @Author  : Owen
 # @File    : plan_service.py
 # @Software: PyCharm
+import logging
+
+from flask_jwt_extended import get_jwt_identity
 
 from flask_project.dao.plan_dao import PlanDao
 from flask_project.model.plan_model import PlanModel
 from flask_project.service.testcase_service import TestcaseService
+from flask_project.service.user_service import UserService
+
 plan_dao = PlanDao()
 testcase_service = TestcaseService()
+user_service = UserService()
 
 
 class PlanService:
@@ -36,17 +42,25 @@ class PlanService:
         '''
         创建测试计划
         '''
+        #获取登录token对应用户名
+        username = get_jwt_identity().get("username")
         # 创建之前先通过名称查询计划是否已经存在
         plan = self.get_by_name(plan_model.name)
         print(f"名称 {plan_model.name} 的查询结果为 {plan}")
+
         # 不存在则新增
         if not plan:
             # 根据测试用例 ID 查询获取测试用例对象列表
             testcase_list = [testcase_service.get(testcase_id) for testcase_id in testcase_id_list]
             # 构建测试计划对象
             plan_model.testcases = testcase_list
+            #统计计划中用例数
+            plan_model.case_count = len(testcase_list)
+            plan_model.create_by = username
             # 创建测试计划
             return plan_dao.create(plan_model)
+
+
         # 存在则返回 False
         return False
 

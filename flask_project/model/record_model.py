@@ -29,7 +29,7 @@ class RecordModel(Base):
     # 测试报告
     report = Column(String(80), nullable=False, unique=True)
     # 执行时间
-    create_time = Column(DateTime, nullable=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    create_time = Column(DateTime, nullable=True, default=datetime.utcnow)
 
     # 参数1： 关联的另外一个业务表类名， 参数2： 反射别名
     plan: PlanModel = relationship("PlanModel", backref="record")
