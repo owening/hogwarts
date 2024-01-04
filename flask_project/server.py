@@ -28,7 +28,7 @@ Base = declarative_base()
 # 定义数据库
 db_user = "root"
 db_pass = "owen123"
-db_host = "121.37.219.141"
+db_host = "xxxx"
 db_port = "3306"
 db_name = "owen_db"
 # 数据库类型+数据库引擎（ pip install pymysql）
